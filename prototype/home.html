@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=393, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>首页 - AI画廊</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        brand: '#0052D9',
+        'brand-light': '#E8F0FE',
+        'brand-hover': '#003CAB',
+        'td-bg': '#F5F5F5',
+        'td-card': '#FFFFFF',
+        'td-text': '#1a1a1a',
+        'td-text-secondary': '#999999',
+        'td-text-placeholder': '#BBBBBB',
+        'td-border': '#E7E7E7',
+        'td-success': '#00A870',
+        'td-warning': '#ED7B2F',
+        'td-danger': '#D54941',
+      },
+      fontFamily: {
+        sans: ['Noto Sans SC', 'sans-serif'],
+      }
+    }
+  }
+}
+</script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Noto Sans SC', sans-serif; background: #F5F5F5; overflow-x: hidden; }
+  ::-webkit-scrollbar { display: none; }
+
+  .waterfall { column-count: 2; column-gap: 8px; }
+  .waterfall-item { break-inside: avoid; margin-bottom: 8px; }
+
+  .fab-btn {
+    position: fixed; bottom: 80px; right: 20px;
+    width: 52px; height: 52px; border-radius: 50%;
+    background: #0052D9; color: white;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 16px rgba(0,82,217,0.4);
+    transition: all 0.2s ease; cursor: pointer; z-index: 50;
+  }
+  .fab-btn:active { transform: scale(0.92); background: #003CAB; }
+
+  .card-img { width: 100%; border-radius: 8px 8px 0 0; object-fit: cover; display: block; }
+
+  .tab-bar {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    height: 64px; background: white;
+    border-top: 0.5px solid #E7E7E7;
+    display: flex; align-items: center; justify-content: space-around;
+    z-index: 100; padding-bottom: env(safe-area-inset-bottom, 0);
+  }
+  .tab-item {
+    display: flex; flex-direction: column; align-items: center; gap: 2px;
+    font-size: 10px; color: #999; cursor: pointer; transition: color 0.15s;
+  }
+  .tab-item.active { color: #0052D9; }
+  .tab-item svg { width: 24px; height: 24px; }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .waterfall-item { animation: fadeInUp 0.4s ease both; }
+  .waterfall-item:nth-child(2) { animation-delay: 0.05s; }
+  .waterfall-item:nth-child(3) { animation-delay: 0.1s; }
+  .waterfall-item:nth-child(4) { animation-delay: 0.15s; }
+  .waterfall-item:nth-child(5) { animation-delay: 0.2s; }
+  .waterfall-item:nth-child(6) { animation-delay: 0.25s; }
+  .waterfall-item:nth-child(7) { animation-delay: 0.3s; }
+  .waterfall-item:nth-child(8) { animation-delay: 0.35s; }
+</style>
+</head>
+<body class="bg-td-bg min-h-screen">
+
+  <div class="sticky top-0 z-40 bg-white/95 backdrop-blur-sm border-b border-td-border">
+    <div class="flex items-center justify-between px-4 h-11">
+      <h1 class="text-lg font-bold text-td-text tracking-tight">AI 画廊</h1>
+      <div class="flex items-center gap-3">
+        <svg class="w-5 h-5 text-td-text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+      </div>
+    </div>
+  </div>
+
+  <div class="px-2 pt-2 pb-20">
+    <div class="waterfall">
+      <div class="waterfall-item">
+        <div class="bg-td-card rounded-lg overflow-hidden shadow-sm">
+          <img class="card-img" src="https://picsum.photos/400/500?random=1" alt="" style="height:160px">
+          <div class="p-2.5">
+            <p class="text-xs text-td-text leading-snug line-clamp-2">一只橘猫坐在窗台上，望着窗外的夕阳，油画风格</p>
+            <div class="flex items-center gap-1.5 mt-2">
+              <img src="https://api.dicebear.com/7.x/adventurer/svg?seed=Lily" class="w-4 h-4 rounded-full" alt="">
+              <span class="text-[10px] text-td-text-secondary">小橘</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="waterfall-item">
+        <div class="bg-td-card rounded-lg overflow-hidden shadow-sm">
+          <img class="card-img" src="https://picsum.photos/400/320?random=2" alt="" style="height:120px">
+          <div class="p-2.5">
+            <p class="text-xs text-td-text leading-snug line-clamp-2">赛博朋克城市夜景，霓虹灯，雨后倒影</p>
+            <div class="flex items-center gap-1.5 mt-2">
+              <img src="https://api.dicebear.com/7.x/adventurer/svg?seed=Max" class="w-4 h-4 rounded-full" alt="">
+              <span class="text-[10px] text-td-text-secondary">数码旅人</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="waterfall-item">
+        <div class="bg-td-card rounded-lg overflow-hidden shadow-sm">
+          <img class="card-img" src="https://picsum.photos/400/440?random=3" alt="" style="height:150px">
+          <div class="p-2.5">
+            <p class="text-xs text-td-text leading-snug line-clamp-2">水墨山水画，远山近水，一叶扁舟，中国风</p>
+            <div class="flex items-center gap-1.5 mt-2">
+              <img src="https://api.dicebear.com/7.x/adventurer/svg?seed=Chen" class="w-4 h-4 rounded-full" alt="">
+              <span class="text-[10px] text-td-text-secondary">墨白</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="waterfall-item">
+        <div class="bg-td-card rounded-lg overflow-hidden shadow-sm">
+          <img class="card-img" src="https://picsum.photos/400/560?random=4" alt="" style="height:180px">
+          <div class="p-2.5">
+            <p class="text-xs text-td-text leading-snug line-clamp-2">梦幻森林中的精灵，发光的蘑菇，萤火虫，奇幻插画</p>
+            <div class="flex items-center gap-1.5 mt-2">
+              <img src="https://api.dicebear.com/7.x/adventurer/svg?seed=Fairy" class="w-4 h-4 rounded-full" alt="">
+              <span class="text-[10px] text-td-text-secondary">林间客</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="waterfall-item">
+        <div class="bg-td-card rounded-lg overflow-hidden shadow-sm">
+          <img class="card-img" src="https://picsum.photos/400/360?random=5" alt="" style="height:130px">
+          <div class="p-2.5">
+            <p class="text-xs text-td-text leading-snug line-clamp-2">宇航员在火星表面行走，电影感，广角镜头</p>
+            <div class="flex items-center gap-1.5 mt-2">
+              <img src="https://api.dicebear.com/7.x/adventurer/svg?seed=Star" class="w-4 h-4 rounded-full" alt="">
+              <span class="text-[10px] text-td-text-secondary">星际旅者</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="waterfall-item">
+        <div class="bg-td-card rounded-lg overflow-hidden shadow-sm">
+          <img class="card-img" src="https://picsum.photos/400/480?random=6" alt="" style="height:155px">
+          <div class="p-2.5">
+            <p class="text-xs text-td-text leading-snug line-clamp-2">日式拉面特写，热气腾腾，写实摄影风格</p>
+            <div class="flex items-center gap-1.5 mt-2">
+              <img src="https://api.dicebear.com/7.x/adventurer/svg?seed=Food" class="w-4 h-4 rounded-full" alt="">
+              <span class="text-[10px] text-td-text-secondary">食光记</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="waterfall-item">
+        <div class="bg-td-card rounded-lg overflow-hidden shadow-sm">
+          <img class="card-img" src="https://picsum.photos/400/400?random=7" alt="" style="height:140px">
+          <div class="p-2.5">
+            <p class="text-xs text-td-text leading-snug line-clamp-2">一只白狐在雪地中奔跑，动漫风格，飘雪</p>
+            <div class="flex items-center gap-1.5 mt-2">
+              <img src="https://api.dicebear.com/7.x/adventurer/svg?seed=Fox" class="w-4 h-4 rounded-full" alt="">
+              <span class="text-[10px] text-td-text-secondary">雪狐</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="waterfall-item">
+        <div class="bg-td-card rounded-lg overflow-hidden shadow-sm">
+          <img class="card-img" src="https://picsum.photos/400/520?random=8" alt="" style="height:170px">
+          <div class="p-2.5">
+            <p class="text-xs text-td-text leading-snug line-clamp-2">古风少女撑伞走在石桥上，烟雨江南，工笔画</p>
+            <div class="flex items-center gap-1.5 mt-2">
+              <img src="https://api.dicebear.com/7.x/adventurer/svg?seed=Rain" class="w-4 h-4 rounded-full" alt="">
+              <span class="text-[10px] text-td-text-secondary">雨巷</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex items-center justify-center py-4 gap-2">
+      <div class="w-4 h-4 border-2 border-brand border-t-transparent rounded-full animate-spin"></div>
+      <span class="text-xs text-td-text-secondary">加载更多画作...</span>
+    </div>
+  </div>
+
+  <div class="fab-btn" onclick="">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+  </div>
+
+  <div class="tab-bar">
+    <div class="tab-item active">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 5a1 1 0 011-1h4a1 1 0 011 1v5a1 1 0 01-1 1H5a1 1 0 01-1-1V5zm10 0a1 1 0 011-1h4a1 1 0 011 1v3a1 1 0 01-1 1h-4a1 1 0 01-1-1V5zM4 16a1 1 0 011-1h4a1 1 0 011 1v3a1 1 0 01-1 1H5a1 1 0 01-1-1v-3zm10-2a1 1 0 011-1h4a1 1 0 011 1v5a1 1 0 01-1 1h-4a1 1 0 01-1-1v-5z"/></svg>
+      <span>首页</span>
+    </div>
+    <div class="tab-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+      <span>我的</span>
+    </div>
+  </div>
+
+</body>
+</html>
