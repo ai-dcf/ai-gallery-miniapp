@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 画廊 - 原型总览</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        brand: '#0052D9',
+        'brand-light': '#E8F0FE',
+        'td-text': '#1a1a1a',
+        'td-text-secondary': '#999999',
+      },
+      fontFamily: {
+        sans: ['Noto Sans SC', 'sans-serif'],
+      }
+    }
+  }
+}
+</script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Noto Sans SC', sans-serif; background: #0F0F13; min-height: 100vh; }
+
+  .phone-frame {
+    width: 393px;
+    height: 852px;
+    border-radius: 50px;
+    overflow: hidden;
+    background: #000;
+    position: relative;
+    box-shadow:
+      0 0 0 2px #2a2a30,
+      0 0 0 4px #1a1a1e,
+      0 20px 60px rgba(0,0,0,0.5),
+      0 0 80px rgba(0,82,217,0.06);
+  }
+
+  .phone-frame::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 126px; height: 34px;
+    background: #000;
+    border-radius: 0 0 20px 20px;
+    z-index: 10;
+  }
+
+  .phone-frame iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 48px;
+  }
+
+  .phone-label {
+    text-align: center;
+    margin-top: 20px;
+    color: #888;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+
+  .phone-label span {
+    display: block;
+    font-size: 11px;
+    color: #555;
+    margin-top: 4px;
+    font-weight: 300;
+  }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .phone-wrapper {
+    animation: fadeInUp 0.6s ease both;
+  }
+  .phone-wrapper:nth-child(2) { animation-delay: 0.15s; }
+  .phone-wrapper:nth-child(3) { animation-delay: 0.3s; }
+
+  .page-title {
+    background: linear-gradient(135deg, #4A90E2 0%, #0052D9 50%, #7B61FF 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+</style>
+</head>
+<body>
+
+  <div class="px-8 py-12 max-w-[1600px] mx-auto">
+    <div class="text-center mb-14">
+      <h1 class="text-4xl font-bold page-title mb-3">AI 画廊 · 原型总览</h1>
+      <p class="text-sm text-gray-500 font-light">WeChat Mini Program Prototype · iPhone 15 Pro · TDesign Weixin</p>
+      <div class="flex items-center justify-center gap-6 mt-5">
+        <div class="flex items-center gap-2 text-xs text-gray-500">
+          <div class="w-2 h-2 rounded-full bg-brand"></div>
+          首页
+        </div>
+        <div class="flex items-center gap-2 text-xs text-gray-500">
+          <div class="w-2 h-2 rounded-full bg-purple-500"></div>
+          我的
+        </div>
+        <div class="flex items-center gap-2 text-xs text-gray-500">
+          <div class="w-2 h-2 rounded-full bg-emerald-500"></div>
+          创建图片
+        </div>
+      </div>
+    </div>
+
+    <div class="flex flex-wrap justify-center gap-12">
+
+      <div class="phone-wrapper">
+        <div class="phone-frame">
+          <iframe src="home.html" title="首页"></iframe>
+        </div>
+        <div class="phone-label">
+          首页 · 画廊流
+          <span>瀑布流展示 · 悬浮创建按钮 · 滚动加载</span>
+        </div>
+      </div>
+
+      <div class="phone-wrapper">
+        <div class="phone-frame">
+          <iframe src="profile.html" title="我的"></iframe>
+        </div>
+        <div class="phone-label">
+          我的 · 个人中心
+          <span>微信登录 · 个人画廊 · 右上角切换登录态</span>
+        </div>
+      </div>
+
+      <div class="phone-wrapper">
+        <div class="phone-frame">
+          <iframe src="create.html" title="创建图片"></iframe>
+        </div>
+        <div class="phone-label">
+          创建图片 · AI 生成
+          <span>提示词输入 · 常用风格 · 右上角切换三状态</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="mt-16 text-center text-xs text-gray-600 pb-8">
+      <p>原型界面使用 TDesign Weixin 设计风格 · iPhone 15 Pro (393 × 852pt) · 点击右上角按钮切换页面状态</p>
+    </div>
+  </div>
+
+</body>
+</html>
