@@ -1,0 +1,9 @@
+{
+  "name": "text2image",
+  "version": "1.0.0",
+  "description": "文生图云函数 - 调用阿里云万相模型生成图片",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}
