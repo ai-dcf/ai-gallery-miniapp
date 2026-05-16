@@ -26,6 +26,7 @@ Component({
     progress: 0,
     taskId: '',
     pollCount: 0,
+    isPublishing: false,
   },
 
   _pollTimer: null as ReturnType<typeof setInterval> | null,
@@ -206,6 +207,40 @@ Component({
         taskId: '',
         pollCount: 0,
       })
+    },
+
+    async onPublish() {
+      if (!this.data.generatedImageUrl) {
+        this.showMessage('没有可发布的图片', 'warning')
+        return
+      }
+
+      this.setData({ isPublishing: true })
+
+      try {
+        const res = await wx.cloud.callFunction({
+          name: 'publish',
+          data: {
+            name: 'publish',
+            imageUrl: this.data.generatedImageUrl,
+            prompt: this.data.prompt,
+          },
+        })
+
+        const result: any = res.result
+        if (result.code === 0) {
+          this.showMessage('发布成功', 'success')
+          setTimeout(() => {
+            wx.switchTab({ url: '/pages/profile/profile' })
+          }, 1000)
+        } else {
+          this.showMessage(result.message || '发布失败', 'error')
+        }
+      } catch (err: any) {
+        this.showMessage(err.message || '发布失败，请重试', 'error')
+      } finally {
+        this.setData({ isPublishing: false })
+      }
     },
 
     onInspirationTap() {

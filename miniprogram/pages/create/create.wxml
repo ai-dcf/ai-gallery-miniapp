@@ -110,14 +110,30 @@
 
         <view class="complete-actions">
           <t-button
-            theme="primary"
+            theme="light"
             size="large"
-            block
             icon="refresh"
             bindtap="onRegenerate"
+            t-class="action-btn"
           >
             重新生成
           </t-button>
+          <t-button
+            theme="success"
+            size="large"
+            icon="check"
+            bindtap="onPublish"
+            loading="{{isPublishing}}"
+            disabled="{{isPublishing}}"
+            t-class="action-btn"
+          >
+            {{isPublishing ? '发布中...' : '发布'}}
+          </t-button>
+        </view>
+
+        <view class="publish-hint">
+          <t-icon name="info-circle" size="28rpx" color="#0052D9" />
+          <text class="publish-hint-text">发布后图片将出现在我的页面</text>
         </view>
       </view>
     </block>

@@ -17,7 +17,11 @@ Component({
       likes: 0,
       favorites: 0,
     },
-    myGallery: [] as string[],
+    myGallery: [] as Array<{
+      _id: string
+      imageUrl: string
+      prompt: string
+    }>,
   },
 
   lifetimes: {
@@ -28,7 +32,9 @@ Component({
 
   pageLifetimes: {
     show() {
-      if (!this.data.isLoggedIn && !this.data.showEditModal) {
+      if (this.data.isLoggedIn) {
+        this.loadMyImages()
+      } else if (!this.data.showEditModal) {
         this.autoLogin()
       }
     },
@@ -59,6 +65,7 @@ Component({
               },
               stats: userData.stats || { works: 0, likes: 0, favorites: 0 },
             })
+            this.loadMyImages()
           } else {
             this.setData({
               isLoading: false,
@@ -75,6 +82,36 @@ Component({
         console.error('autoLogin error:', err)
         this.setData({ isLoading: false })
         wx.showToast({ title: '网络错误，请重试', icon: 'none' })
+      }
+    },
+
+    async loadMyImages() {
+      try {
+        const res = await wx.cloud.callFunction({
+          name: 'publish',
+          data: {
+            name: 'getMyImages',
+            page: 0,
+            pageSize: 30,
+          },
+        }) as any
+
+        if (res.result.code === 0) {
+          const list = res.result.data.list || []
+          this.setData({
+            myGallery: list.map((item: any) => ({
+              _id: item._id,
+              imageUrl: item.imageUrl,
+              prompt: item.prompt,
+            })),
+            stats: {
+              ...this.data.stats,
+              works: res.result.data.total,
+            },
+          })
+        }
+      } catch (err) {
+        console.error('loadMyImages error:', err)
       }
     },
 

@@ -76,11 +76,11 @@
         <view
           class="gallery-grid-item"
           wx:for="{{myGallery}}"
-          wx:key="*this"
+          wx:key="_id"
           data-index="{{index}}"
           bindtap="onGalleryItemTap"
         >
-          <image class="gallery-image" src="{{item}}" mode="aspectFill" lazy-load />
+          <image class="gallery-image" src="{{item.imageUrl}}" mode="aspectFill" lazy-load />
         </view>
       </view>
       <view class="gallery-empty" wx:else>
