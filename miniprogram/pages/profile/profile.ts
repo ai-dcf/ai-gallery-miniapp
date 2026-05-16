@@ -5,9 +5,9 @@ Component({
     isLoggedIn: false,
     isLoading: true,
     isSubmitting: false,
-    showProfileForm: false,
-    tempAvatarUrl: '',
-    nickName: '',
+    showEditModal: false,
+    editAvatarUrl: '',
+    editNickName: '',
     userInfo: {
       avatarUrl: '',
       nickName: '',
@@ -28,7 +28,7 @@ Component({
 
   pageLifetimes: {
     show() {
-      if (!this.data.isLoggedIn) {
+      if (!this.data.isLoggedIn && !this.data.showEditModal) {
         this.autoLogin()
       }
     },
@@ -62,7 +62,9 @@ Component({
           } else {
             this.setData({
               isLoading: false,
-              showProfileForm: true,
+              showEditModal: true,
+              editAvatarUrl: '',
+              editNickName: '',
             })
           }
         } else {
@@ -76,21 +78,41 @@ Component({
       }
     },
 
-    onChooseAvatar(e: any) {
-      const avatarUrl = e.detail.avatarUrl
-      this.setData({ tempAvatarUrl: avatarUrl })
+    onWechatLogin() {
+      this.setData({ isLoading: true })
+      this.autoLogin()
     },
 
-    onNicknameInput(e: any) {
-      this.setData({ nickName: e.detail.value })
+    onEditProfile() {
+      this.setData({
+        showEditModal: true,
+        editAvatarUrl: '',
+        editNickName: this.data.userInfo.nickName,
+      })
     },
 
-    async onSubmitProfile() {
-      if (!this.data.tempAvatarUrl) {
-        wx.showToast({ title: '请选择头像', icon: 'none' })
+    onCloseEditModal() {
+      if (!this.data.isLoggedIn) {
         return
       }
-      if (!this.data.nickName.trim()) {
+      this.setData({
+        showEditModal: false,
+        editAvatarUrl: '',
+        editNickName: '',
+      })
+    },
+
+    onEditChooseAvatar(e: any) {
+      this.setData({ editAvatarUrl: e.detail.avatarUrl })
+    },
+
+    onEditNickNameInput(e: any) {
+      this.setData({ editNickName: e.detail.value })
+    },
+
+    async onSubmitEditProfile() {
+      const { editNickName, editAvatarUrl } = this.data
+      if (!editNickName.trim()) {
         wx.showToast({ title: '请输入昵称', icon: 'none' })
         return
       }
@@ -98,57 +120,59 @@ Component({
       this.setData({ isSubmitting: true })
 
       try {
-        let cloudAvatarUrl = this.data.tempAvatarUrl
+        let cloudAvatarUrl = this.data.userInfo.avatarUrl
 
-        if (this.data.tempAvatarUrl.startsWith('http://tmp/') || this.data.tempAvatarUrl.startsWith('wxfile://')) {
+        if (editAvatarUrl && (editAvatarUrl.startsWith('http://tmp/') || editAvatarUrl.startsWith('wxfile://'))) {
+          const ext = editAvatarUrl.split('.').pop() || 'png'
           const uploadRes = await wx.cloud.uploadFile({
-            cloudPath: `avatars/${app.globalData.openid}_${Date.now()}.png`,
-            filePath: this.data.tempAvatarUrl,
+            cloudPath: `avatars/${app.globalData.openid}.${ext}`,
+            filePath: editAvatarUrl,
           })
           cloudAvatarUrl = uploadRes.fileID
+        } else if (editAvatarUrl) {
+          cloudAvatarUrl = editAvatarUrl
+        }
+
+        if (!cloudAvatarUrl) {
+          this.setData({ isSubmitting: false })
+          wx.showToast({ title: '请选择头像', icon: 'none' })
+          return
         }
 
         const updateRes = await wx.cloud.callFunction({
           name: 'updateUserInfo',
           data: {
             avatarUrl: cloudAvatarUrl,
-            nickName: this.data.nickName.trim(),
+            nickName: editNickName.trim(),
           },
         }) as any
 
         if (updateRes.result.code === 0) {
-          const finalAvatarUrl = cloudAvatarUrl
-          const finalNickName = this.data.nickName.trim()
-
           app.globalData.userInfo = {
-            avatarUrl: finalAvatarUrl,
-            nickName: finalNickName,
+            avatarUrl: cloudAvatarUrl,
+            nickName: editNickName.trim(),
           }
-
           this.setData({
             isLoggedIn: true,
-            showProfileForm: false,
+            showEditModal: false,
             isSubmitting: false,
             userInfo: {
-              avatarUrl: finalAvatarUrl,
-              nickName: finalNickName,
+              avatarUrl: cloudAvatarUrl,
+              nickName: editNickName.trim(),
             },
+            editAvatarUrl: '',
+            editNickName: '',
           })
-
-          wx.showToast({ title: '登录成功', icon: 'success' })
+          wx.showToast({ title: '保存成功', icon: 'success' })
         } else {
           this.setData({ isSubmitting: false })
           wx.showToast({ title: updateRes.result.message || '保存失败', icon: 'none' })
         }
       } catch (err) {
-        console.error('submitProfile error:', err)
+        console.error('submitEditProfile error:', err)
         this.setData({ isSubmitting: false })
         wx.showToast({ title: '保存失败，请重试', icon: 'none' })
       }
-    },
-
-    onWechatLogin() {
-      this.setData({ showProfileForm: true })
     },
 
     async onLogout() {
@@ -162,12 +186,12 @@ Component({
         app.globalData.openid = ''
         this.setData({
           isLoggedIn: false,
-          showProfileForm: false,
+          showEditModal: false,
           userInfo: { avatarUrl: '', nickName: '' },
           stats: { works: 0, likes: 0, favorites: 0 },
           myGallery: [],
-          tempAvatarUrl: '',
-          nickName: '',
+          editAvatarUrl: '',
+          editNickName: '',
         })
       }
     },

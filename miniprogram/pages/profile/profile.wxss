@@ -75,87 +75,6 @@
   color: var(--td-text-placeholder);
 }
 
-.profile-form-section {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 80rpx 48rpx 64rpx;
-  background: #fff;
-}
-
-.form-title {
-  font-size: 40rpx;
-  font-weight: 700;
-  color: var(--td-text);
-  margin-bottom: 12rpx;
-}
-
-.form-desc {
-  font-size: 26rpx;
-  color: var(--td-text-secondary);
-  margin-bottom: 64rpx;
-}
-
-.avatar-choose-wrapper {
-  margin-bottom: 48rpx;
-}
-
-.avatar-choose-btn {
-  width: 192rpx;
-  height: 192rpx;
-  border-radius: 50%;
-  padding: 0;
-  margin: 0;
-  background: var(--td-bg);
-  border: 4rpx dashed #d5d5d5;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  line-height: normal;
-}
-
-.avatar-choose-btn::after {
-  border: none;
-}
-
-.avatar-preview {
-  width: 100%;
-  height: 100%;
-}
-
-.avatar-choose-placeholder {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8rpx;
-}
-
-.avatar-choose-text {
-  font-size: 22rpx;
-  color: #ccc;
-}
-
-.nickname-input-wrapper {
-  width: 100%;
-  max-width: 520rpx;
-  margin-bottom: 48rpx;
-  background: var(--td-bg);
-  border-radius: 16rpx;
-  padding: 0 32rpx;
-}
-
-.nickname-input {
-  height: 88rpx;
-  font-size: 30rpx;
-  color: var(--td-text);
-}
-
-.submit-btn-wrapper {
-  width: 100%;
-  max-width: 520rpx;
-}
-
 .logged-header {
   position: relative;
   overflow: hidden;
@@ -184,6 +103,37 @@
   border-radius: 50%;
   border: 4rpx solid rgba(255, 255, 255, 0.3);
   flex-shrink: 0;
+}
+
+.avatar-wrap {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.edit-avatar-btn {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 44rpx;
+  height: 44rpx;
+  background: var(--brand-color, #0052D9);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2rpx solid #fff;
+}
+
+.edit-profile-btn {
+  display: flex;
+  align-items: center;
+  gap: 6rpx;
+  margin-top: 8rpx;
+}
+
+.edit-profile-text {
+  font-size: 22rpx;
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .user-meta {
@@ -316,4 +266,136 @@
 
 .menu-cell-logout {
   color: #e34d59;
+}
+
+.edit-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.edit-modal {
+  width: 620rpx;
+  background: #fff;
+  border-radius: 24rpx;
+  overflow: hidden;
+}
+
+.edit-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 32rpx 32rpx 16rpx;
+}
+
+.edit-modal-title {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: var(--td-text);
+}
+
+.edit-modal-close {
+  padding: 8rpx;
+}
+
+.edit-modal-body {
+  padding: 24rpx 32rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.edit-avatar-wrapper {
+  margin-bottom: 32rpx;
+}
+
+.edit-avatar-btn-choose {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 50%;
+  padding: 0;
+  margin: 0;
+  background: var(--td-bg);
+  position: relative;
+  overflow: hidden;
+  line-height: normal;
+}
+
+.edit-avatar-btn-choose::after {
+  border: none;
+}
+
+.edit-avatar-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8rpx;
+  border: 4rpx dashed #d5d5d5;
+  border-radius: 50%;
+  box-sizing: border-box;
+}
+
+.edit-avatar-placeholder-text {
+  font-size: 22rpx;
+  color: #ccc;
+}
+
+.edit-avatar-img {
+  width: 100%;
+  height: 100%;
+}
+
+.edit-avatar-mask {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 48rpx;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.edit-field {
+  width: 100%;
+}
+
+.edit-field-label {
+  font-size: 26rpx;
+  color: var(--td-text-secondary);
+  margin-bottom: 12rpx;
+  display: block;
+}
+
+.edit-field-input-wrap {
+  background: var(--td-bg);
+  border-radius: 12rpx;
+  padding: 0 24rpx;
+}
+
+.edit-field-input {
+  height: 80rpx;
+  font-size: 28rpx;
+  color: var(--td-text);
+}
+
+.edit-modal-footer {
+  display: flex;
+  gap: 24rpx;
+  padding: 16rpx 32rpx 32rpx;
+}
+
+.edit-modal-footer .t-button {
+  flex: 1;
 }

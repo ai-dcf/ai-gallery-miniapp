@@ -33,59 +33,22 @@
     </view>
   </block>
 
-  <block wx:elif="{{!isLoggedIn && showProfileForm}}">
-    <view class="profile-form-section">
-      <view class="form-title">完善个人信息</view>
-      <view class="form-desc">设置你的头像和昵称，开始创作之旅</view>
-
-      <view class="avatar-choose-wrapper">
-        <button class="avatar-choose-btn" open-type="chooseAvatar" bindchooseavatar="onChooseAvatar">
-          <image
-            wx:if="{{tempAvatarUrl}}"
-            class="avatar-preview"
-            src="{{tempAvatarUrl}}"
-            mode="aspectFill"
-          />
-          <view wx:else class="avatar-choose-placeholder">
-            <t-icon name="user" size="56rpx" color="#CCCCCC" />
-            <text class="avatar-choose-text">选择头像</text>
-          </view>
-        </button>
-      </view>
-
-      <view class="nickname-input-wrapper">
-        <input
-          class="nickname-input"
-          type="nickname"
-          placeholder="请输入昵称"
-          value="{{nickName}}"
-          bindinput="onNicknameInput"
-        />
-      </view>
-
-      <view class="submit-btn-wrapper">
-        <t-button
-          theme="primary"
-          size="large"
-          block
-          loading="{{isSubmitting}}"
-          disabled="{{isSubmitting}}"
-          bindtap="onSubmitProfile"
-        >
-          {{isSubmitting ? '保存中...' : '开始使用'}}
-        </t-button>
-      </view>
-    </view>
-  </block>
-
   <block wx:else>
     <view class="logged-header">
       <view class="header-bg"></view>
       <view class="user-info-section">
-        <image class="user-avatar" src="{{userInfo.avatarUrl}}" mode="aspectFill" />
+        <view class="avatar-wrap">
+          <image class="user-avatar" src="{{userInfo.avatarUrl}}" mode="aspectFill" />
+          <view class="edit-avatar-btn" bindtap="onEditProfile">
+            <t-icon name="edit" size="28rpx" color="#fff" />
+          </view>
+        </view>
         <view class="user-meta">
           <text class="user-name">{{userInfo.nickName}}</text>
-          <text class="user-bio">用 AI 描绘想象中的世界</text>
+          <view class="edit-profile-btn" bindtap="onEditProfile">
+            <t-icon name="edit" size="24rpx" color="rgba(255,255,255,0.7)" />
+            <text class="edit-profile-text">编辑资料</text>
+          </view>
         </view>
       </view>
       <view class="user-stats">
@@ -171,4 +134,65 @@
       </t-cell-group>
     </view>
   </block>
+
+  <view class="edit-overlay" wx:if="{{showEditModal}}" bindtap="onCloseEditModal">
+    <view class="edit-modal" catchtap="">
+      <view class="edit-modal-header">
+        <text class="edit-modal-title">{{isLoggedIn ? '编辑资料' : '完善个人信息'}}</text>
+        <view class="edit-modal-close" bindtap="onCloseEditModal">
+          <t-icon name="close" size="40rpx" color="#999" />
+        </view>
+      </view>
+      <view class="edit-modal-body">
+        <view class="edit-avatar-wrapper">
+          <button class="edit-avatar-btn-choose" open-type="chooseAvatar" bindchooseavatar="onEditChooseAvatar">
+            <image
+              wx:if="{{editAvatarUrl || userInfo.avatarUrl}}"
+              class="edit-avatar-img"
+              src="{{editAvatarUrl || userInfo.avatarUrl}}"
+              mode="aspectFill"
+            />
+            <view wx:else class="edit-avatar-placeholder">
+              <t-icon name="user" size="56rpx" color="#CCCCCC" />
+              <text class="edit-avatar-placeholder-text">选择头像</text>
+            </view>
+            <view class="edit-avatar-mask">
+              <t-icon name="camera" size="40rpx" color="#fff" />
+            </view>
+          </button>
+        </view>
+        <view class="edit-field">
+          <text class="edit-field-label">昵称</text>
+          <view class="edit-field-input-wrap">
+            <input
+              class="edit-field-input"
+              type="nickname"
+              placeholder="请输入昵称"
+              value="{{editNickName}}"
+              bindinput="onEditNickNameInput"
+            />
+          </view>
+        </view>
+      </view>
+      <view class="edit-modal-footer">
+        <t-button
+          wx:if="{{isLoggedIn}}"
+          theme="light"
+          size="medium"
+          bindtap="onCloseEditModal"
+        >
+          取消
+        </t-button>
+        <t-button
+          theme="primary"
+          size="medium"
+          loading="{{isSubmitting}}"
+          disabled="{{isSubmitting}}"
+          bindtap="onSubmitEditProfile"
+        >
+          {{isSubmitting ? '保存中...' : (isLoggedIn ? '保存' : '开始使用')}}
+        </t-button>
+      </view>
+    </view>
+  </view>
 </view>
