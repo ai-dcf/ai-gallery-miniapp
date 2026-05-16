@@ -7,14 +7,14 @@
     bindscrolltolower="onScrollToLower"
     lower-threshold="200"
   >
-    <view class="gallery-waterfall">
+    <view class="gallery-waterfall" wx:if="{{galleryList.length > 0}}">
       <view class="waterfall-column waterfall-left">
         <view
           class="gallery-card"
           wx:for="{{galleryList}}"
           wx:if="{{index % 2 === 0}}"
-          wx:key="id"
-          data-id="{{item.id}}"
+          wx:key="_id"
+          data-id="{{item._id}}"
           bindtap="onImageTap"
         >
           <image
@@ -26,7 +26,7 @@
           <view class="card-info">
             <text class="card-prompt">{{item.prompt}}</text>
             <view class="card-author">
-              <image class="author-avatar" src="{{item.avatarUrl}}" />
+              <image class="author-avatar" src="{{item.avatarUrl}}" mode="aspectFill" />
               <text class="author-name">{{item.nickName}}</text>
             </view>
           </view>
@@ -37,8 +37,8 @@
           class="gallery-card"
           wx:for="{{galleryList}}"
           wx:if="{{index % 2 === 1}}"
-          wx:key="id"
-          data-id="{{item.id}}"
+          wx:key="_id"
+          data-id="{{item._id}}"
           bindtap="onImageTap"
         >
           <image
@@ -50,12 +50,17 @@
           <view class="card-info">
             <text class="card-prompt">{{item.prompt}}</text>
             <view class="card-author">
-              <image class="author-avatar" src="{{item.avatarUrl}}" />
+              <image class="author-avatar" src="{{item.avatarUrl}}" mode="aspectFill" />
               <text class="author-name">{{item.nickName}}</text>
             </view>
           </view>
         </view>
       </view>
+    </view>
+
+    <view class="gallery-empty" wx:if="{{!loading && galleryList.length === 0}}">
+      <t-icon name="image" size="96rpx" color="#D5D5D5" />
+      <text class="gallery-empty-text">还没有作品，快去创作吧</text>
     </view>
 
     <view class="loading-footer" wx:if="{{loadingMore}}">

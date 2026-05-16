@@ -107,6 +107,29 @@ exports.main = async (event, context) => {
       }
     }
 
+    if (name === 'getAllImages') {
+      const { page = 0, pageSize = 10 } = event
+      const skip = page * pageSize
+
+      const countRes = await imagesCollection.count()
+
+      const { data: list } = await imagesCollection
+        .orderBy('createTime', 'desc')
+        .skip(skip)
+        .limit(pageSize)
+        .get()
+
+      return {
+        code: 0,
+        message: '获取成功',
+        data: {
+          list,
+          total: countRes.total,
+          hasMore: skip + list.length < countRes.total,
+        },
+      }
+    }
+
     return { code: -1, message: `未知的操作类型: ${name}`, data: null }
   } catch (err) {
     return { code: -1, message: err.message || '操作失败', data: null }

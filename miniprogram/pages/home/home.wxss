@@ -119,3 +119,17 @@
   background: var(--td-bg);
   z-index: 100;
 }
+
+.gallery-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 160rpx 0;
+  gap: 24rpx;
+}
+
+.gallery-empty-text {
+  font-size: 28rpx;
+  color: var(--td-text-placeholder);
+}
