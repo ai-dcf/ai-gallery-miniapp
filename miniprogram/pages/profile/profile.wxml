@@ -135,7 +135,7 @@
     </view>
   </block>
 
-  <view class="edit-overlay" wx:if="{{showEditModal}}" bindtap="onCloseEditModal">
+  <view class="edit-overlay" wx:if="{{showEditModal}}" bindtap="onOverlayTap" data-role="overlay">
     <view class="edit-modal" catchtap="">
       <view class="edit-modal-header">
         <text class="edit-modal-title">{{isLoggedIn ? '编辑资料' : '完善个人信息'}}</text>

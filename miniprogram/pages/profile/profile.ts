@@ -91,6 +91,13 @@ Component({
       })
     },
 
+    onOverlayTap(e: any) {
+      if (e.target.dataset.role !== 'overlay') {
+        return
+      }
+      this.onCloseEditModal()
+    },
+
     onCloseEditModal() {
       if (!this.data.isLoggedIn) {
         return
