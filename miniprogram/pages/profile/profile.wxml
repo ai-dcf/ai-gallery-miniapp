@@ -195,4 +195,17 @@
       </view>
     </view>
   </view>
+
+  <view class="preview-overlay" wx:if="{{showImagePreview}}" bindtap="onPreviewOverlayTap">
+    <view class="preview-content" catchtap="">
+      <view class="preview-close" bindtap="onClosePreview">
+        <t-icon name="close" size="40rpx" color="#fff" />
+      </view>
+      <image class="preview-image" src="{{previewImageUrl}}" mode="widthFix" />
+      <view class="preview-prompt" wx:if="{{previewPrompt}}">
+        <text class="preview-prompt-label">提示词</text>
+        <text class="preview-prompt-text">{{previewPrompt}}</text>
+      </view>
+    </view>
+  </view>
 </view>

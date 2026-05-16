@@ -22,6 +22,9 @@ Component({
       imageUrl: string
       prompt: string
     }>,
+    showImagePreview: false,
+    previewImageUrl: '',
+    previewPrompt: '',
   },
 
   lifetimes: {
@@ -242,7 +245,26 @@ Component({
 
     onGalleryItemTap(e: any) {
       const { index } = e.currentTarget.dataset
-      console.log('gallery item tap:', index)
+      const item = this.data.myGallery[index]
+      if (item) {
+        this.setData({
+          showImagePreview: true,
+          previewImageUrl: item.imageUrl,
+          previewPrompt: item.prompt,
+        })
+      }
+    },
+
+    onClosePreview() {
+      this.setData({
+        showImagePreview: false,
+        previewImageUrl: '',
+        previewPrompt: '',
+      })
+    },
+
+    onPreviewOverlayTap() {
+      this.onClosePreview()
     },
 
     onViewAllTap() {
