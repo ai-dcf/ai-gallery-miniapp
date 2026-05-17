@@ -61,6 +61,8 @@ exports.main = async (event, context) => {
         nickName,
         avatarUrl,
         likes: 0,
+        like_count: 0,
+        collect_count: 0,
         createTime: db.serverDate(),
       }
 
@@ -119,11 +121,37 @@ exports.main = async (event, context) => {
         .limit(pageSize)
         .get()
 
+      const imageIds = list.map(item => item._id)
+
+      let likedMap = {}
+      let collectedMap = {}
+      if (imageIds.length > 0) {
+        const { data: likedRecords } = await db.collection('image_like')
+          .where({ _openid: openid, imageId: db.command.in(imageIds) })
+          .field({ imageId: true })
+          .get()
+        likedRecords.forEach(r => { likedMap[r.imageId] = true })
+
+        const { data: collectedRecords } = await db.collection('image_collect')
+          .where({ _openid: openid, imageId: db.command.in(imageIds) })
+          .field({ imageId: true })
+          .get()
+        collectedRecords.forEach(r => { collectedMap[r.imageId] = true })
+      }
+
+      const enrichedList = list.map(item => ({
+        ...item,
+        like_count: item.like_count || 0,
+        collect_count: item.collect_count || 0,
+        isLiked: !!likedMap[item._id],
+        isCollected: !!collectedMap[item._id],
+      }))
+
       return {
         code: 0,
         message: '获取成功',
         data: {
-          list,
+          list: enrichedList,
           total: countRes.total,
           hasMore: skip + list.length < countRes.total,
         },

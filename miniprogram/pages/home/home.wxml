@@ -14,17 +14,35 @@
           wx:for="{{galleryList}}"
           wx:if="{{index % 2 === 0}}"
           wx:key="_id"
-          data-id="{{item._id}}"
-          bindtap="onImageTap"
         >
           <image
             class="card-image"
             src="{{item.imageUrl}}"
             mode="widthFix"
             lazy-load
+            data-id="{{item._id}}"
+            bindtap="onImageTap"
           />
           <view class="card-info">
             <text class="card-prompt">{{item.prompt}}</text>
+            <view class="card-actions">
+              <view class="action-btn" data-id="{{item._id}}" catchtap="onLikeTap">
+                <t-icon
+                  name="{{item.isLiked ? 'thumb-up-filled' : 'thumb-up'}}"
+                  size="36rpx"
+                  color="{{item.isLiked ? '#0052D9' : '#BBBBBB'}}"
+                />
+                <text class="action-count {{item.isLiked ? 'action-active' : ''}}">{{item.like_count}}</text>
+              </view>
+              <view class="action-btn" data-id="{{item._id}}" catchtap="onCollectTap">
+                <t-icon
+                  name="{{item.isCollected ? 'star-filled' : 'star'}}"
+                  size="36rpx"
+                  color="{{item.isCollected ? '#ED7B2F' : '#BBBBBB'}}"
+                />
+                <text class="action-count {{item.isCollected ? 'action-collect-active' : ''}}">{{item.collect_count}}</text>
+              </view>
+            </view>
             <view class="card-author">
               <image class="author-avatar" src="{{item.avatarUrl}}" mode="aspectFill" />
               <text class="author-name">{{item.nickName}}</text>
@@ -38,17 +56,35 @@
           wx:for="{{galleryList}}"
           wx:if="{{index % 2 === 1}}"
           wx:key="_id"
-          data-id="{{item._id}}"
-          bindtap="onImageTap"
         >
           <image
             class="card-image"
             src="{{item.imageUrl}}"
             mode="widthFix"
             lazy-load
+            data-id="{{item._id}}"
+            bindtap="onImageTap"
           />
           <view class="card-info">
             <text class="card-prompt">{{item.prompt}}</text>
+            <view class="card-actions">
+              <view class="action-btn" data-id="{{item._id}}" catchtap="onLikeTap">
+                <t-icon
+                  name="{{item.isLiked ? 'thumb-up-filled' : 'thumb-up'}}"
+                  size="36rpx"
+                  color="{{item.isLiked ? '#0052D9' : '#BBBBBB'}}"
+                />
+                <text class="action-count {{item.isLiked ? 'action-active' : ''}}">{{item.like_count}}</text>
+              </view>
+              <view class="action-btn" data-id="{{item._id}}" catchtap="onCollectTap">
+                <t-icon
+                  name="{{item.isCollected ? 'star-filled' : 'star'}}"
+                  size="36rpx"
+                  color="{{item.isCollected ? '#ED7B2F' : '#BBBBBB'}}"
+                />
+                <text class="action-count {{item.isCollected ? 'action-collect-active' : ''}}">{{item.collect_count}}</text>
+              </view>
+            </view>
             <view class="card-author">
               <image class="author-avatar" src="{{item.avatarUrl}}" mode="aspectFill" />
               <text class="author-name">{{item.nickName}}</text>

@@ -48,6 +48,38 @@
   text-overflow: ellipsis;
 }
 
+.card-actions {
+  display: flex;
+  align-items: center;
+  gap: 24rpx;
+  margin-top: 12rpx;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  gap: 6rpx;
+  padding: 4rpx 0;
+}
+
+.action-btn:active {
+  opacity: 0.7;
+}
+
+.action-count {
+  font-size: 22rpx;
+  color: var(--td-text-placeholder);
+  line-height: 1;
+}
+
+.action-active {
+  color: var(--brand-color);
+}
+
+.action-collect-active {
+  color: var(--td-warning);
+}
+
 .card-author {
   display: flex;
   align-items: center;
